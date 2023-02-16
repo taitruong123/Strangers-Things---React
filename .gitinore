@@ -1,0 +1,4 @@
+package-lock.json
+webpack.config.js
+node_modules
+dist/main.js
