@@ -1,55 +1,61 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-const LogIn = (props) => {
-    const navigate = useNavigate(); 
-    
-    const logInOrRegister = async(event) =>{ 
-      const logInOrRegisterEndPoint = event.target.childNodes[2].id === 'login' ? 'login' 
-      : 'register'
-      
-     const response = await fetch(`https://strangers-things.herokuapp.com/api/2211-ftb-et-web-am/users/${logInOrRegisterEndPoint}`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify ({
-          user: {
-            username: props.usernameInput,
-            password: props.passwordInput
-          }
-        })        
+const cohortName = '2211-FTB-ET-WEB-AM';
+const APIURL = `https://strangers-things.herokuapp.com/api/${cohortName}/users/login`
+
+
+const Login = ({ loggedIn, setLoggedIn, setAuthor }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetch(APIURL, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: {
+          username: username,
+          password: password
+        }
       })
-      const info = await response.json()
-      props.setToken(info.data.token)
-      props.setIsLoggedIn(true)
-      navigate("/")
-    }
+    })
+      .then(response => 
+        response.json()
+      )
+      .then(result => {
+        if(result.success){
+          window.localStorage.setItem('loginStatus', result.data.token)
+          setLoggedIn(true);
+          setAuthor(username);
+          navigate('/')
+        }
 
-    return(
-      <div>
-        <h1>Log In</h1>
-        <form onSubmit={logInOrRegister}>
-          <input class='post-form' placeholder='Username' onChange={(event) => props.setUsernameInput(event.target.value)}></input>
-          <input class='post-form' placeholder='Password' onChange={(event) => props.setPasswordInput(event.target.value)}></input>
-          {
-            props.displayLogInButton ? 
-            <>
-              <button class='post-form' id="login">Log In</button>
-              <button class='post-form' type="button" onClick={() => props.setDisplayLogInButton(false)} >Register Here</button>
-        
-            </> : 
-            <>
-              
-              <button class='post-form' id='register'>Register</button>
-              <button class='post-form' type="button" onClick={() => props.setDisplayLogInButton(true)}>Return to Log In</button>
-            </>
-          }
-        </form>
-      </div>
-    )
+      })
+      .catch('ERROR', console.error);
+  }
+
+  return (
+    <div>
+      <h1>
+        Login User
+      </h1>
+
+      <form onSubmit={handleSubmit}>
+        <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} />Username
+        <input type="text" value={password} onChange={(event) => setPassword(event.target.value)} />Password
+        <button>Submit</button>
+      </form>
+      <Link to='/register'>Not Registered?</Link>
+
+    </div>
+
+  )
 }
 
-
-
-export default LogIn
+export default Login
