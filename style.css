@@ -5,5 +5,45 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, ;
     
   }
+  .newPost {
+    margin-top: 20px;
+}
 
-  
+#new-post-input {
+    margin-top: 5px;
+}
+
+#post-container {
+    margin-bottom: 10px;
+}
+#post-description {
+  margin-bottom: 6px;
+}
+
+#login {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#post-title {
+  margin-top: 20px;
+}
+
+#home {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#profile {
+  margin-top: 20px;
+}
+
+#login-buttons {
+  margin-right: 5px;
+}
+
+#login-inputs {
+  width: 525px;
+  margin-bottom: 5px;
+}

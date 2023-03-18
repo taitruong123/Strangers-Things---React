@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Searching from "./Searching";
+import SearchPosts from "./SearchPosts";
 import { Link, Navigate } from 'react-router-dom';
 
 

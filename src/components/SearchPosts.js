@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Searching = (props) => {
+const SearchPosts = (props) => {
 
     return (
         <div>
@@ -17,4 +17,4 @@ const Searching = (props) => {
     )
 }
 
-export default Searching;
+export default SearchPosts;
